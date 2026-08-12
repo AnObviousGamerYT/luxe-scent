@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Luxe Scent</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(210,170,100,.18),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(120,180,255,.12),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 40% 90%,
+            rgba(255,255,255,.08),
+            transparent 35%
+        ),
+
+        #050608;
+
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   MOVING WATER BACKGROUND
+===================================================== */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    width: 900px;
+    height: 900px;
+
+    left: -300px;
+    top: 20%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.08),
+            transparent 65%
+        );
+
+    filter: blur(40px);
+
+    animation:
+        waterMove 18s ease-in-out infinite alternate;
+
+    pointer-events: none;
+
+    z-index: -2;
+}
+
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 800px;
+    height: 800px;
+
+    right: -250px;
+    bottom: -100px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(190,150,80,.12),
+            transparent 65%
+        );
+
+    filter: blur(50px);
+
+    animation:
+        waterMove2 22s ease-in-out infinite alternate;
+
+    pointer-events: none;
+
+    z-index: -2;
+}
+
+
+@keyframes waterMove {
+
+    0% {
+        transform:
+            translate(
+                -50px,
+                -30px
+            )
+            scale(1);
+    }
+
+    100% {
+        transform:
+            translate(
+                250px,
+                100px
+            )
+            scale(1.3);
+    }
+
+}
+
+
+@keyframes waterMove2 {
+
+    0% {
+        transform:
+            translate(
+                50px,
+                30px
+            )
+            scale(1);
+    }
+
+    100% {
+        transform:
+            translate(
+                -180px,
+                -100px
+            )
+            scale(1.2);
+    }
+
+}
+
+
+/* =====================================================
+   LIQUID GLASS
+===================================================== */
+
+.glass {
+
+    background:
+        linear-gradient(
+            135deg,
+
+            rgba(255,255,255,.13),
+
+            rgba(255,255,255,.045)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.18);
+
+    box-shadow:
+
+        inset
+        0 1px
+        rgba(255,255,255,.28),
+
+        inset
+        0 -1px
+        rgba(255,255,255,.05),
+
+        0
+        25px
+        70px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:
+        blur(22px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(22px)
+        saturate(150%);
+
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+
+    position: fixed;
+
+    top: 18px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            1150px,
+            calc(100% - 30px)
+        );
+
+    height: 68px;
+
+    border-radius: 24px;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 16px;
+
+}
+
+
+.logo {
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    white-space: nowrap;
+
+}
+
+
+.logo span {
+    color: #e7bd72;
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    gap: 5px;
+
+}
+
+
+.nav-links button {
+
+    border: none;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color: #bbb;
+
+    padding:
+        10px 15px;
+
+    border-radius: 13px;
+
+    cursor: pointer;
+
+    transition:
+        .25s ease;
+
+}
+
+
+.nav-links button:hover {
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.10);
+
+}
+
+
+.nav-links button.active {
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.13);
+
+    box-shadow:
+        inset
+        0 1px
+        rgba(255,255,255,.2);
+
+}
+
+
+.cart-button {
+
+    border:
+
+        1px solid
+        rgba(231,189,114,.35);
+
+    background:
+        rgba(231,189,114,.10);
+
+    color: white;
+
+    padding:
+        10px 15px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+
+.cart-button:hover {
+
+    background:
+        rgba(231,189,114,.2);
+
+}
+
+
+/* =====================================================
+   PAGE SYSTEM
+===================================================== */
+
+#app {
+
+    min-height: 100vh;
+
+}
+
+
+.page {
+
+    min-height: 100vh;
+
+    padding:
+        130px
+        25px
+        80px;
+
+    display: none;
+
+}
+
+
+.page.active {
+
+    display: block;
+
+    animation:
+        pageIn
+        .55s
+        cubic-bezier(.22,1,.36,1);
+
+}
+
+
+@keyframes pageIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(.985);
+
+        filter:
+            blur(8px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:
+            blur(0);
+
+    }
+
+}
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+.home {
+
+    min-height:
+        calc(100vh - 130px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+.hero {
+
+    max-width: 850px;
+
+}
+
+
+.hero-label {
+
+    color:
+        #e7bd72;
+
+    letter-spacing:
+        7px;
+
+    font-size:
+        11px;
+
+    font-weight:
+        bold;
+
+}
+
+
+.hero h1 {
+
+    font-size:
+        clamp(
+            65px,
+            12vw,
+            140px
+        );
+
+    line-height:
+        .82;
+
+    letter-spacing:
+        -9px;
+
+    margin:
+        25px 0;
+
+}
+
+
+.hero p {
+
+    max-width:
+        620px;
+
+    margin:
+        auto;
+
+    color:
+        #aaa;
+
+    font-size:
+        18px;
+
+    line-height:
+        1.7;
+
+}
+
+
+.hero-buttons {
+
+    margin-top:
+        35px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    gap:
+        12px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+
+.primary {
+
+    border:
+        none;
+
+    color:
+        #111;
+
+    font-weight:
+        bold;
+
+    padding:
+        15px 25px;
+
+    border-radius:
+        15px;
+
+    cursor:
+        pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f1d291,
+            #b9833d
+        );
+
+    box-shadow:
+        0
+        15px
+        40px
+        rgba(
+            190,
+            140,
+            60,
+            .18
+        );
+
+    transition:
+        .25s;
+
+}
+
+
+.primary:hover {
+
+    transform:
+        translateY(-4px);
+
+}
+
+
+.secondary {
+
+    color:
+        white;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    padding:
+        15px 25px;
+
+    border-radius:
+        15px;
+
+    cursor:
+        pointer;
+
+    backdrop-filter:
+        blur(15px);
+
+    transition:
+        .25s;
+
+}
+
+
+.secondary:hover {
+
+    background:
+        rgba(255,255,255,.12);
+
+}
+
+
+/* =====================================================
+   SHOP
+===================================================== */
+
+.container {
+
+    max-width:
+        1150px;
+
+    margin:
+        auto;
+
+}
+
+
+.heading {
+
+    margin-bottom:
+        35px;
+
+}
+
+
+.heading h2 {
+
+    font-size:
+        50px;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.heading p {
+
+    color:
+        #888;
+
+}
+
+
+.controls {
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    flex-wrap:
+        wrap;
+
+    margin-bottom:
+        30px;
+
+}
+
+
+.search {
+
+    flex:
+        1;
+
+    min-width:
+        230px;
+
+    padding:
+        14px 17px;
+
+    border-radius:
+        14px;
+
+    outline:
+        none;
+
+    color:
+        white;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+}
+
+
+.filter {
+
+    padding:
+        13px 16px;
+
+    color:
+        #aaa;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:
+        13px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.filter.active {
+
+    color:
+        white;
+
+    background:
+        rgba(231,189,114,.13);
+
+    border-color:
+        rgba(231,189,114,.35);
+
+}
+
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+.products {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            1fr
+        );
+
+    gap:
+        20px;
+
+}
+
+
+.product {
+
+    border-radius:
+        25px;
+
+    overflow:
+        hidden;
+
+    transition:
+        .3s;
+
+}
+
+
+.product:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0
+        30px
+        70px
+        rgba(0,0,0,.4);
+
+}
+
+
+.product-image {
+
+    height:
+        280px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.11),
+            transparent 65%
+        );
+
+}
+
+
+.bottle {
+
+    width:
+        100px;
+
+    height:
+        165px;
+
+    border-radius:
+        14px
+        14px
+        22px
+        22px;
+
+    background:
+        linear-gradient(
+            105deg,
+            #111,
+            #555,
+            #151515
+        );
+
+    position:
+        relative;
+
+    box-shadow:
+        0
+        30px
+        60px
+        rgba(0,0,0,.7),
+
+        inset
+        5px
+        0
+        15px
+        rgba(255,255,255,.12);
+
+}
+
+
+.bottle::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        -35px;
+
+    left:
+        25px;
+
+    width:
+        50px;
+
+    height:
+        35px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #111,
+            #444,
+            #111
+        );
+
+    border-radius:
+        6px 6px 0 0;
+
+}
+
+
+.bottle::after {
+
+    content:
+        "LUXE";
+
+    position:
+        absolute;
+
+    top:
+        75px;
+
+    width:
+        100%;
+
+    text-align:
+        center;
+
+    color:
+        #e7bd72;
+
+    font-size:
+        12px;
+
+    font-weight:
+        bold;
+
+    letter-spacing:
+        3px;
+
+}
+
+
+.product-info {
+
+    padding:
+        20px;
+
+}
+
+
+.category {
+
+    color:
+        #d9ae65;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+.product h3 {
+
+    margin:
+        8px 0;
+
+}
+
+
+.stars {
+
+    color:
+        #d9ae65;
+
+    margin:
+        10px 0;
+
+}
+
+
+.price {
+
+    font-size:
+        20px;
+
+    font-weight:
+        bold;
+
+}
+
+
+.product-actions {
+
+    display:
+        flex;
+
+    gap:
+        8px;
+
+    margin-top:
+        15px;
+
+}
+
+
+.add {
+
+    flex:
+        1;
+
+    padding:
+        12px;
+
+    border:
+        none;
+
+    border-radius:
+        13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ebc882,
+            #b9823e
+        );
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+}
+
+
+.view {
+
+    padding:
+        12px;
+
+    border-radius:
+        13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    background:
+        rgba(255,255,255,.05);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =====================================================
+   ABOUT / CONTACT
+===================================================== */
+
+.center-page {
+
+    min-height:
+        calc(100vh - 130px);
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+}
+
+
+.info-card {
+
+    max-width:
+        750px;
+
+    padding:
+        50px;
+
+    border-radius:
+        30px;
+
+    text-align:
+        center;
+
+}
+
+
+.info-card h2 {
+
+    font-size:
+        50px;
+
+    margin-bottom:
+        20px;
+
+}
+
+
+.info-card p {
+
+    color:
+        #999;
+
+    line-height:
+        1.8;
+
+    font-size:
+        17px;
+
+}
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+.overlay {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    background:
+        rgba(0,0,0,.5);
+
+    backdrop-filter:
+        blur(7px);
+
+    z-index:
+        1500;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    transition:
+        .3s;
+
+}
+
+
+.overlay.show {
+
+    opacity:
+        1;
+
+    pointer-events:
+        all;
+
+}
+
+
+.cart {
+
+    position:
+        fixed;
+
+    right:
+        15px;
+
+    top:
+        15px;
+
+    width:
+        min(
+            430px,
+            calc(100% - 30px)
+        );
+
+    height:
+        calc(100vh - 30px);
+
+    z-index:
+        1600;
+
+    border-radius:
+        27px;
+
+    transform:
+        translateX(110%);
+
+    transition:
+        .4s
+        cubic-bezier(
+            .22,
+            1,
+            .36,
+            1
+        );
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    overflow:
+        hidden;
+
+}
+
+
+.cart.open {
+
+    transform:
+        translateX(0);
+
+}
+
+
+.cart-header {
+
+    padding:
+        22px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.1);
+
+}
+
+
+.close {
+
+    width:
+        35px;
+
+    height:
+        35px;
+
+    border:
+        none;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:
+        white;
+
+    cursor:
+        pointer;
+
+    font-size:
+        20px;
+
+}
+
+
+.cart-items {
+
+    flex:
+        1;
+
+    overflow:
+        auto;
+
+    padding:
+        20px;
+
+}
+
+
+.cart-item {
+
+    display:
+        flex;
+
+    gap:
+        13px;
+
+    padding:
+        15px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.cart-bottle {
+
+    width:
+        55px;
+
+    height:
+        75px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        9px;
+
+    background:
+        linear-gradient(
+            105deg,
+            #111,
+            #555,
+            #151515
+        );
+
+}
+
+
+.cart-info {
+
+    flex:
+        1;
+
+}
+
+
+.cart-info p {
+
+    color:
+        #aaa;
+
+    margin-top:
+        5px;
+
+}
+
+
+.quantity {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    margin-top:
+        10px;
+
+}
+
+
+.quantity button {
+
+    width:
+        28px;
+
+    height:
+        28px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    background:
+        rgba(255,255,255,.06);
+
+    color:
+        white;
+
+    border-radius:
+        8px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.cart-footer {
+
+    padding:
+        20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.1);
+
+}
+
+
+.total {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    font-size:
+        20px;
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.checkout {
+
+    width:
+        100%;
+
+    padding:
+        15px;
+
+    border:
+        none;
+
+    border-radius:
+        15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ebc882,
+            #b9823e
+        );
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:900px) {
+
+    .products {
+
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+
+    }
+
+    .nav-links {
+
+        display:
+            none;
+
+    }
+
+}
+
+
+@media(max-width:600px) {
+
+    .products {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .hero h1 {
+
+        font-size:
+            65px;
+
+        letter-spacing:
+            -5px;
+
+    }
+
+    .info-card {
+
+        padding:
+            30px 20px;
+
+    }
+
+    .info-card h2 {
+
+        font-size:
+            38px;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<header class="navbar glass">
+
+    <div class="logo">
+        LUXE<span>SCENT</span>
+    </div>
+
+
+    <nav class="nav-links">
+
+        <button
+            onclick="navigate('home')"
+            data-page="home">
+
+            🏠 Home
+
+        </button>
+
+
+        <button
+            onclick="navigate('shop')"
+            data-page="shop">
+
+            Shop
+
+        </button>
+
+
+        <button
+            onclick="navigate('about')"
+            data-page="about">
+
+            About
+
+        </button>
+
+
+        <button
+            onclick="navigate('contact')"
+            data-page="contact">
+
+            Contact
+
+        </button>
+
+    </nav>
+
+
+    <button
+        class="cart-button"
+        onclick="openCart()">
+
+        🛒
+        Cart
+        (<span id="cartCount">0</span>)
+
+    </button>
+
+</header>
+
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<main id="app">
+
+
+<!-- HOME -->
+
+<section
+    id="page-home"
+    class="page">
+
+    <div class="home">
+
+        <div class="hero">
+
+            <div class="hero-label">
+
+                PREMIUM FRAGRANCE
+
+            </div>
+
+
+            <h1>
+
+                SMELL<br>
+
+                EXPENSIVE.
+
+            </h1>
+
+
+            <p>
+
+                Premium-inspired fragrances
+                designed to make an impression
+                without the ridiculous price tag.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <button
+                    class="primary"
+                    onclick="navigate('shop')">
+
+                    SHOP COLLECTION
+
+                </button>
+
+
+                <button
+                    class="secondary"
+                    onclick="navigate('about')">
+
+                    OUR STORY
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- SHOP -->
+
+<section
+    id="page-shop"
+    class="page">
+
+    <div class="container">
+
+        <div class="heading">
+
+            <h2>
+
+                The Collection
+
+            </h2>
+
+            <p>
+
+                Find your signature scent.
+
+            </p>
+
+        </div>
+
+
+        <div class="controls">
+
+            <input
+                id="search"
+                class="search"
+                placeholder="Search fragrances..."
+                oninput="renderProducts()">
+
+
+            <button
+                class="filter active"
+                onclick="setCategory('all',this)">
+
+                All
+
+            </button>
+
+
+            <button
+                class="filter"
+                onclick="setCategory('men',this)">
+
+                Men's
+
+            </button>
+
+
+            <button
+                class="filter"
+                onclick="setCategory('women',this)">
+
+                Women's
+
+            </button>
+
+
+            <button
+                class="filter"
+                onclick="setCategory('unisex',this)">
+
+                Unisex
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="products"
+            class="products">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ABOUT -->
+
+<section
+    id="page-about"
+    class="page">
+
+    <div class="center-page">
+
+        <div class="info-card glass">
+
+            <h2>
+
+                Our Story
+
+            </h2>
+
+
+            <p>
+
+                Luxe Scent was created for people
+                who want premium fragrance without
+                paying luxury-brand prices.
+
+                <br><br>
+
+                We focus on fragrances that smell
+                incredible, last throughout the day,
+                and fit into everyday life.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section
+    id="page-contact"
+    class="page">
+
+    <div class="center-page">
+
+        <div class="info-card glass">
+
+            <h2>
+
+                Contact Us
+
+            </h2>
+
+
+            <p>
+
+                Have a question about an order,
+                fragrance, or anything else?
+
+                <br><br>
+
+                Email us at:
+
+                <br><br>
+
+                <strong
+                    style="color:#e7bd72">
+
+                    support@luxescent.com
+
+                </strong>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     CART
+===================================================== -->
+
+<div
+    id="overlay"
+    class="overlay"
+    onclick="closeCart()">
+</div>
+
+
+<aside
+    id="cart"
+    class="cart glass">
+
+
+    <div class="cart-header">
+
+        <h2>
+
+            Your Cart
+
+        </h2>
+
+
+        <button
+            class="close"
+            onclick="closeCart()">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="cartItems"
+        class="cart-items">
+
+    </div>
+
+
+    <div class="cart-footer">
+
+        <div class="total">
+
+            <span>
+
+                Total
+
+            </span>
+
+
+            <strong>
+
+                $
+
+                <span
+                    id="cartTotal">
+
+                    0.00
+
+                </span>
+
+            </strong>
+
+        </div>
+
+
+        <button
+            class="checkout"
+            onclick="checkout()">
+
+            CHECKOUT
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<script>
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+const products = [
+
+    {
+        id: 1,
+        name: "Midnight Noir",
+        category: "men",
+        price: 69.99
+    },
+
+    {
+        id: 2,
+        name: "Golden Oud",
+        category: "unisex",
+        price: 89.99
+    },
+
+    {
+        id: 3,
+        name: "Velvet Rose",
+        category: "women",
+        price: 74.99
+    },
+
+    {
+        id: 4,
+        name: "Ocean Drive",
+        category: "men",
+        price: 59.99
+    },
+
+    {
+        id: 5,
+        name: "Royal Amber",
+        category: "unisex",
+        price: 79.99
+    },
+
+    {
+        id: 6,
+        name: "Sakura Mist",
+        category: "women",
+        price: 64.99
+    },
+
+    {
+        id: 7,
+        name: "Black Leather",
+        category: "men",
+        price: 84.99
+    },
+
+    {
+        id: 8,
+        name: "Cloud Nine",
+        category: "unisex",
+        price: 72.99
+    }
+
+];
+
+
+let cart = [];
+
+let category = "all";
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function navigate(page) {
+
+    if (
+        location.hash ===
+        "#" + page
+    ) {
+
+        showPage(page);
+
+        return;
+
+    }
+
+
+    history.pushState(
+        {
+            page: page
+        },
+        "",
+        "#" + page
+    );
+
+
+    showPage(page);
+
+}
+
+
+function showPage(page) {
+
+    const pages =
+        document.querySelectorAll(".page");
+
+
+    pages.forEach(
+        p =>
+            p.classList.remove("active")
+    );
+
+
+    const target =
+        document.getElementById(
+            "page-" + page
+        );
+
+
+    if (!target) {
+
+        page = "home";
+
+        target =
+            document.getElementById(
+                "page-home"
+            );
+
+    }
+
+
+    target.classList.add("active");
+
+
+    document
+        .querySelectorAll(
+            ".nav-links button"
+        )
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.page === page
+            );
+
+        });
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   BROWSER BACK / FORWARD
+===================================================== */
+
+window.addEventListener(
+    "popstate",
+    () => {
+
+        const page =
+            location.hash
+            .replace("#","") ||
+            "home";
+
+        showPage(page);
+
+    }
+);
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        const page =
+            location.hash
+            .replace("#","") ||
+            "home";
+
+
+        history.replaceState(
+            {
+                page: page
+            },
+            "",
+            "#" + page
+        );
+
+
+        showPage(page);
+
+        renderProducts();
+
+        updateCart();
+
+    }
+);
+
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+function renderProducts() {
+
+    const container =
+        document.getElementById(
+            "products"
+        );
+
+
+    const search =
+        document
+        .getElementById("search")
+        ?.value
+        .toLowerCase() || "";
+
+
+    const filtered =
+        products.filter(
+            product => {
+
+                return (
+
+                    (
+                        category === "all" ||
+                        product.category === category
+                    )
+
+                    &&
+
+                    product.name
+                    .toLowerCase()
+                    .includes(search)
+
+                );
+
+            }
+        );
+
+
+    container.innerHTML = "";
+
+
+    filtered.forEach(
+        product => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "product glass";
+
+
+            card.innerHTML = `
+
+                <div
+                    class="product-image">
+
+                    <div
+                        class="bottle">
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="product-info">
+
+                    <div
+                        class="category">
+
+                        ${product.category.toUpperCase()}
+
+                    </div>
+
+
+                    <h3>
+
+                        ${product.name}
+
+                    </h3>
+
+
+                    <div
+                        class="stars">
+
+                        ★★★★★
+
+                    </div>
+
+
+                    <div
+                        class="price">
+
+                        $${product.price.toFixed(2)}
+
+                    </div>
+
+
+                    <div
+                        class="product-actions">
+
+                        <button
+                            class="add"
+                            onclick="
+                                addToCart(${product.id})
+                            ">
+
+                            ADD
+
+                        </button>
+
+
+                        <button
+                            class="view"
+                            onclick="
+                                addToCart(${product.id})
+                            ">
+
+                            + CART
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function setCategory(
+    newCategory,
+    button
+) {
+
+    category =
+        newCategory;
+
+
+    document
+        .querySelectorAll(".filter")
+        .forEach(
+            b =>
+                b.classList.remove(
+                    "active"
+                )
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    renderProducts();
+
+}
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+function addToCart(id) {
+
+    const existing =
+        cart.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(existing) {
+
+        existing.quantity++;
+
+    }
+
+    else {
+
+        cart.push({
+            id: id,
+            quantity: 1
+        });
+
+    }
+
+
+    updateCart();
+
+}
+
+
+function updateCart() {
+
+    const container =
+        document.getElementById(
+            "cartItems"
+        );
+
+
+    container.innerHTML = "";
+
+
+    let total = 0;
+
+    let count = 0;
+
+
+    if(cart.length === 0) {
+
+        container.innerHTML = `
+
+            <div
+                style="
+                    text-align:center;
+                    color:#777;
+                    margin-top:80px;
+                ">
+
+                🛒
+
+                <br><br>
+
+                Your cart is empty.
+
+            </div>
+
+        `;
+
+    }
+
+
+    cart.forEach(
+        item => {
+
+            const product =
+                products.find(
+                    p =>
+                        p.id === item.id
+                );
+
+
+            total +=
+                product.price *
+                item.quantity;
+
+
+            count +=
+                item.quantity;
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "cart-item";
+
+
+            div.innerHTML = `
+
+                <div
+                    class="cart-bottle">
+                </div>
+
+
+                <div
+                    class="cart-info">
+
+                    <h4>
+
+                        ${product.name}
+
+                    </h4>
+
+
+                    <p>
+
+                        $${product.price.toFixed(2)}
+
+                    </p>
+
+
+                    <div
+                        class="quantity">
+
+                        <button
+                            onclick="
+                                changeQuantity(
+                                    ${product.id},
+                                    -1
+                                )
+                            ">
+
+                            −
+
+                        </button>
+
+
+                        <span>
+
+                            ${item.quantity}
+
+                        </span>
+
+
+                        <button
+                            onclick="
+                                changeQuantity(
+                                    ${product.id},
+                                    1
+                                )
+                            ">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "cartTotal"
+    ).textContent =
+        total.toFixed(2);
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent =
+        count;
+
+}
+
+
+function changeQuantity(
+    id,
+    amount
+) {
+
+    const item =
+        cart.find(
+            i =>
+                i.id === id
+        );
+
+
+    if(!item)
+        return;
+
+
+    item.quantity +=
+        amount;
+
+
+    if(
+        item.quantity <= 0
+    ) {
+
+        cart =
+            cart.filter(
+                i =>
+                    i.id !== id
+            );
+
+    }
+
+
+    updateCart();
+
+}
+
+
+/* =====================================================
+   CART UI
+===================================================== */
+
+function openCart() {
+
+    document
+        .getElementById("cart")
+        .classList.add(
+            "open"
+        );
+
+
+    document
+        .getElementById("overlay")
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+function closeCart() {
+
+    document
+        .getElementById("cart")
+        .classList.remove(
+            "open"
+        );
+
+
+    document
+        .getElementById("overlay")
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CHECKOUT
+===================================================== */
+
+function checkout() {
+
+    if(
+        cart.length === 0
+    ) {
+
+        alert(
+            "Your cart is empty 😭"
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "Your cart is ready for checkout! 🔥\n\n" +
+        "Next step: connect this button " +
+        "to a secure Stripe Checkout backend."
+    );
+
+}
+
+</script>
+
+</body>
+</html>
